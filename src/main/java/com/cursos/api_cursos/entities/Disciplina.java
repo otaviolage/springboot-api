@@ -30,8 +30,7 @@ public class Disciplina {
     public Disciplina() {
     }
 
-    public Disciplina(Integer id, String nome, String nivel) {
-        this.id = id;
+    public Disciplina(String nome, String nivel) {
         this.nome = nome;
         this.nivel = nivel;
     }
