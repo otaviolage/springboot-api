@@ -1,0 +1,22 @@
+package com.cursos.api_cursos.models;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class EditCursoDto {
+    @NotEmpty(message = "Nome é obrigatório")
+    private String nome;
+    @NotEmpty(message = "Preço é obrigatório")
+    private Integer preco;
+    @NotNull(message = "Fornecedor é obrigatório")
+    private Integer fornecedor;
+    @NotNull(message = "Disciplina é obrigatório")
+    private Integer disciplina;
+}

@@ -8,6 +8,7 @@ import com.cursos.api_cursos.entities.Disciplina;
 import com.cursos.api_cursos.entities.Fornecedor;
 import com.cursos.api_cursos.models.CursoDto;
 import com.cursos.api_cursos.models.DisciplinaDto;
+import com.cursos.api_cursos.models.EditCursoDto;
 import com.cursos.api_cursos.models.FindCursoDto;
 import com.cursos.api_cursos.models.FornecedorDto;
 import com.cursos.api_cursos.repositories.CursoRepository;
@@ -91,26 +92,27 @@ public class CursoService implements ICursoService {
         return dados;
     }
 
-//     @Override
-//     @Transactional
-//     public void remover(Integer id) {
-//         usuarioRepository.deleteById(id);
-//     }
+    @Override
+    @Transactional
+    public Curso editar(Integer id, EditCursoDto dto) {
+        Curso curso = cursoRepository.findById(id)
+                .orElseThrow(() -> new Error("Curso não encontrado"));
 
-//     @Override
-//     @Transactional
-//     public void editar(Integer id, UsuarioDTO dto) {
-//         Usuario usuario = usuarioRepository.findById(id)
-//                 .orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
-//         Perfil perfil = perfilRepository.findById(dto.getPerfil())
-//                 .orElseThrow(() -> new RegraNegocioException("Perfil não existe"));
+        Disciplina disciplina = disciplinaRepository.findById(dto.getDisciplina());
+        Fornecedor fornecedor = fornecedorRepository.findById(dto.getFornecedor());
+    
+        curso.setNome(dto.getNome());
+        curso.setPreco(dto.getPreco());
+        curso.setDisciplina(disciplina);
+        curso.setFornecedor(fornecedor);
+    
+        cursoRepository.save(curso);
+        return curso;
+    }
 
-//         usuario.setEmail(dto.getEmail());
-//         usuario.setNome(dto.getNome());
-//         usuario.setSenha(dto.getSenha());
-//         usuario.setPerfil(perfil);
-
-//         usuarioRepository.save(usuario);
-
-//     }
+    @Override
+    @Transactional
+    public void remover(Integer id) {
+        cursoRepository.deleteById(id);
+    }
 }

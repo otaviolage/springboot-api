@@ -58,4 +58,9 @@ public class Disciplina {
     public void setNivel(String nivel) {
         this.nivel = nivel;
     }
+
+    @Override
+    public String toString() {
+        return "Disciplina [id=" + id + ", nome=" + nome + ", nivel=" + nivel + ", curso=" + curso + "]";
+    }
 }
