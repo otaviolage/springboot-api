@@ -1,7 +1,5 @@
 package com.cursos.api_cursos.repositories;
 
-import java.util.List;
-
 import com.cursos.api_cursos.entities.Fornecedor;
 
 import org.springframework.data.jpa.repository.JpaRepository;
