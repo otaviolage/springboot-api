@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,9 +24,11 @@ public class Curso {
     private Integer preco;
 
     @ManyToOne
+    @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
 
     @ManyToOne
+    @JoinColumn(name = "disciplina_id")
     private Disciplina disciplina;
 
     public Curso() {

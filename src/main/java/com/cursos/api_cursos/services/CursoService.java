@@ -7,6 +7,9 @@ import com.cursos.api_cursos.entities.Curso;
 import com.cursos.api_cursos.entities.Disciplina;
 import com.cursos.api_cursos.entities.Fornecedor;
 import com.cursos.api_cursos.models.CursoDto;
+import com.cursos.api_cursos.models.DisciplinaDto;
+import com.cursos.api_cursos.models.FindCursoDto;
+import com.cursos.api_cursos.models.FornecedorDto;
 import com.cursos.api_cursos.repositories.CursoRepository;
 import com.cursos.api_cursos.repositories.DisciplinaRepository;
 import com.cursos.api_cursos.repositories.FornecedorRepository;
@@ -40,20 +43,53 @@ public class CursoService implements ICursoService {
         return cursoRepository.save(curso);
     }
 
-//     @Override
-//     public DadosUsuarioDTO obterUsuarioPorId(Integer id) {
-//         return usuarioRepository.findById(id).map(u -> {
-//             return DadosUsuarioDTO
-//                     .builder()
-//                     .email(u.getEmail())
-//                     .nome(u.getNome())
-//                     .perfil(PerfilDTO.builder()
-//                             .id(u.getPerfil().getId())
-//                             .nome(u.getPerfil().getNome()).build())
-//                     .build();
-//         })
-//                 .orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
-//     }
+    @Override
+    public FindCursoDto findCurso(Integer id) {
+        return cursoRepository.findById(id).map(c -> {
+            return FindCursoDto
+            .builder()
+                .id(c.getId())
+                .nome(c.getNome())
+                .preco(c.getPreco())
+                .disciplina(DisciplinaDto.builder()
+                        .id(c.getDisciplina().getId())
+                        .nome(c.getDisciplina().getNome())
+                        .nivel(c.getDisciplina().getNivel())
+                        .build())
+                .fornecedor(FornecedorDto.builder()
+                    .id(c.getFornecedor().getId())
+                    .nome(c.getFornecedor().getNome())
+                    .build())
+                .build();
+            })
+                .orElseThrow(() -> new Error("Curso não encontrado"));
+    }
+
+    @Override
+    public ArrayList<FindCursoDto> obterCursos() {
+        ArrayList<FindCursoDto> dados = new ArrayList<>();
+
+        List<Curso> cursos = cursoRepository.findAll();
+        cursos.forEach(c -> {
+            dados.add(
+                    FindCursoDto
+                    .builder()
+                        .id(c.getId())
+                        .nome(c.getNome())
+                        .preco(c.getPreco())
+                        .disciplina(DisciplinaDto.builder()
+                                .id(c.getDisciplina().getId())
+                                .nome(c.getDisciplina().getNome())
+                                .nivel(c.getDisciplina().getNivel())
+                                .build())
+                        .fornecedor(FornecedorDto.builder()
+                            .id(c.getFornecedor().getId())
+                            .nome(c.getFornecedor().getNome())
+                            .build())
+                        .build());
+        });
+        return dados;
+    }
 
 //     @Override
 //     @Transactional
@@ -76,24 +112,5 @@ public class CursoService implements ICursoService {
 
 //         usuarioRepository.save(usuario);
 
-//     }
-
-//     @Override
-//     public ArrayList<DadosUsuarioDTO> obterUsuarios() {
-//         ArrayList<DadosUsuarioDTO> dados = new ArrayList<>();
-
-//         List<Usuario> usuarios = usuarioRepository.findAll();
-//         usuarios.forEach(u -> {
-//             dados.add(
-//                     DadosUsuarioDTO
-//                             .builder()
-//                             .email(u.getEmail())
-//                             .nome(u.getNome())
-//                             .perfil(PerfilDTO.builder()
-//                                     .id(u.getPerfil().getId())
-//                                     .nome(u.getPerfil().getNome()).build())
-//                             .build());
-//         });
-//         return dados;
 //     }
 }
